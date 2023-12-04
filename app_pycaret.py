@@ -1,7 +1,9 @@
 
 # Imports
 import pandas            as pd
+import pyarrow.parquet as pq
 import streamlit         as st
+import os
 import xlsxwriter
 
 from io                     import BytesIO
@@ -41,7 +43,8 @@ def main():
 
     # Verifica se há conteúdo carregado na aplicação
     if (data_file_1 is not None):
-        df_credit = pd.read_feather(data_file_1)
+        df_credit = pq.read_table(data_file_1)
+        print(os.path.abspath(data_file_1))
         df_credit = df_credit.sample(50000)
 
         model_saved = load_model('Final LIGHTGBC - Date 16-11-2023')
